@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Canım Eşim ❤️</title>
+
+<link rel="preload" as="image" href="foto.jpg">
+
+<style>
+:root{--p:0%}
+body{
+  margin:0;height:100vh;
+  background:linear-gradient(120deg,#020617,#1e293b,#312e81);
+  background-size:300% 300%;
+  animation:bg 12s ease infinite;
+  font-family:-apple-system,BlinkMacSystemFont,sans-serif;
+  display:flex;justify-content:center;align-items:center;
+  color:#fff;overflow:hidden
+}
+@keyframes bg{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
+
+.box{
+  background:rgba(2,6,23,.9);
+  padding:26px;border-radius:22px;
+  width:90%;max-width:390px;text-align:center;
+  box-shadow:0 0 40px rgba(255,105,180,.3);
+}
+.title{font-size:22px;margin-bottom:8px}
+.text{font-size:21px;min-height:120px;margin:10px 0 14px}
+.progress{height:10px;width:100%;background:#020617;border-radius:10px;overflow:hidden;margin-bottom:14px}
+.progress span{display:block;height:100%;width:var(--p);background:linear-gradient(90deg,#22c55e,#4ade80);transition:.6s}
+
+button{
+  border:none;border-radius:14px;
+  padding:11px 24px;font-size:16px;
+  margin:6px;cursor:pointer
+}
+.yes{background:#22c55e;color:#022c22}
+.no{background:#fb7185;color:#450a0a}
+.replay{background:#38bdf8;color:#020617;margin-top:14px}
+
+.photo{
+  display:block;width:100%;
+  border-radius:16px;margin:14px 0;
+  opacity:0;
+  animation:fadeIn 1s ease forwards, slowZoom 8s ease-in-out infinite;
+  box-shadow:0 0 20px rgba(255,255,255,.2);
+}
+
+@keyframes fadeIn{to{opacity:1}}
+@keyframes slowZoom{
+  0%{transform:scale(1)}
+  50%{transform:scale(1.05)}
+  100%{transform:scale(1)}
+}
+
+.loveTitle{
+  font-size:26px;
+  margin-bottom:10px;
+  animation:drop 1.2s ease forwards;
+}
+@keyframes drop{
+  from{opacity:0;transform:translateY(-20px)}
+  to{opacity:1;transform:translateY(0)}
+}
+
+.heart{
+  position:fixed;top:-20px;
+  font-size:22px;
+  animation:fall linear forwards
+}
+@keyframes fall{
+  to{transform:translateY(110vh);opacity:0}
+}
+
+.big{font-size:56px;animation:pulse 1s infinite}
+@keyframes pulse{50%{transform:scale(1.3)}}
+</style>
+</head>
+
+<body>
+
+<audio id="music" loop>
+  <source src="music.mp3" type="audio/mpeg">
+</audio>
+
+<div class="box">
+  <div class="title">Canım Eşim ❤️</div>
+  <div class="text" id="text"></div>
+  <div class="progress"><span></span></div>
+  <div id="buttons"></div>
+</div>
+
+<script>
+const t=document.getElementById("text");
+const b=document.getElementById("buttons");
+const root=document.documentElement;
+const music=document.getElementById("music");
+let step=0;
+
+function type(txt,cb){
+  t.innerHTML="";let i=0;
+  const s=setInterval(()=>{
+    t.innerHTML+=txt[i++];
+    if(i>=txt.length){clearInterval(s);cb&&cb()}
+  },40);
+}
+function buttons(arr){
+  b.innerHTML="";
+  arr.forEach(x=>{
+    const btn=document.createElement("button");
+    btn.textContent=x.t;btn.className=x.c;btn.onclick=x.f;
+    b.appendChild(btn);
+  });
+}
+function addP(){step++;root.style.setProperty("--p",(step*10)+"%");}
+
+function rain(){
+  setInterval(()=>{
+    const h=document.createElement("div");
+    h.className="heart";
+    h.textContent=Math.random()>0.5?"❤️":"💖";
+    h.style.left=Math.random()*100+"vw";
+    h.style.animationDuration=(2+Math.random()*3)+"s";
+    document.body.appendChild(h);
+    setTimeout(()=>h.remove(),5000);
+  },220);
+}
+
+/* ---- HİKÂYE SAHNELERİ ---- */
+
+type("Sana küçük bir hikâye hazırladım… 🫶",()=>buttons([
+  {t:"Başlayalım",c:"yes",f:()=>{
+    music.volume=0.4; music.play();
+    q1();
+  }}
+]));
+
+function q1(){
+  addP();
+  type("Bugün biraz ağır mı geliyor?",()=>buttons([
+    {t:"Evet…",c:"yes",f:q2},
+    {t:"Biraz",c:"no",f:q2}
+  ]));
+}
+function q2(){
+  addP();
+  type("Bazen insan yorulduğunu bile anlatamaz.",()=>buttons([
+    {t:"Doğru",c:"yes",f:q3},
+    {t:"Haklısın",c:"no",f:q3}
+  ]));
+}
+function q3(){
+  addP();
+  type("Sadece anlaşılmak ister.",()=>buttons([
+    {t:"Evet",c:"yes",f:q4},
+    {t:"Kesinlikle",c:"no",f:q4}
+  ]));
+}
+function q4(){
+  addP();
+  type("Bazen sessizlik bile çok şey anlatır.",()=>buttons([
+    {t:"Anlatır",c:"yes",f:q5},
+    {t:"Evet",c:"no",f:q5}
+  ]));
+}
+function q5(){
+  addP();
+  type("İşte o anlarda biri yakında olsun istersin.",()=>buttons([
+    {t:"Sarılmak 🤍",c:"yes",f:q6},
+    {t:"Yanımda olsun",c:"no",f:q6}
+  ]));
+}
+function q6(){
+  addP();
+  type("Ben buradayım.",()=>buttons([
+    {t:"Biliyorum",c:"yes",f:q7},
+    {t:"Hissediyorum",c:"no",f:q7}
+  ]));
+}
+function q7(){
+  addP();
+  type("Sadece bugün değil.",()=>buttons([
+    {t:"Devam et",c:"yes",f:q8}
+  ]));
+}
+function q8(){
+  addP();
+  type("Her zaman.",()=>buttons([
+    {t:"❤️",c:"yes",f:q9}
+  ]));
+}
+function q9(){
+  addP();
+  type("Çünkü sen çok değerlisin.",()=>buttons([
+    {t:"Biliyorum",c:"yes",f:final}
+  ]));
+}
+
+/* ---- FİNAL ---- */
+
+function final(){
+  b.innerHTML="";
+  t.innerHTML=`
+    <div class="loveTitle">Canım Eşim ❤️</div>
+    <img class="photo" src="foto.jpg" alt="Biz ❤️">
+    Gülümse 😄<br><br>
+    Bu hikâyenin kahramanı sensin.<br>
+    Seni çok seviyorum.<br><br>
+    <span class="big">❤️</span><br>
+    <button class="replay" onclick="restart()">Tekrar Oyna 🔁</button>
+  `;
+
+  setTimeout(()=>{
+    t.style.display="none";t.offsetHeight;t.style.display="block";
+  },50);
+
+  navigator.vibrate && navigator.vibrate([200,100,200]);
+  rain();
+}
+
+function restart(){
+  location.reload();
+}
+</script>
+</body>
+</html>
